@@ -1,4 +1,4 @@
-package ex_popular_group_story;
+package ex_popular_group_story2;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,12 +18,13 @@ public class Ex02 {
 
         try{
             con = DriverManager.getConnection(url, user, password);
-            sql = "INSERT INTO members(name,brith_day,gender,color_id) VALUES" +
-            "('大野 智','1980-11-26','男',1)," +
-            "('櫻井 翔','1982-1-25','男',2)," +
-            "('相葉 雅紀','1982-12-24','男',3)," +
-            "('二宮 和也','1983-6-17','男',4)," +
-            "('松本 潤','1983-8-30','男',5);";
+            sql = "INSERT INTO colors(id,name) VALUES" +
+            "(1,'blue')," +
+            "(2,'red')," +
+            "(3,'green')," +
+            "(4,'yellow')," +
+            "(5,'porple'),"+
+            "(6,'orange');";
             pstmt =con.prepareStatement(sql);
             int numOfUpdate = pstmt.executeUpdate();
             System.out.println(numOfUpdate+"件データを操作しました。");
@@ -49,4 +50,3 @@ public class Ex02 {
         }
     }
 }
-

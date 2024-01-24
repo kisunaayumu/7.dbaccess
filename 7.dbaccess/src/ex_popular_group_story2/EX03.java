@@ -1,11 +1,12 @@
-package ex_popular_group_story;
+package ex_popular_group_story2;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Ex02 {
+public class EX03 {
     public static void main(String[] args) {
         String url ="jdbc:postgresql://localhost:5432/student";
         String user ="postgres";
@@ -13,22 +14,29 @@ public class Ex02 {
 
         Connection con =null;
         PreparedStatement pstmt=null;
+        ResultSet rs =null;
         String sql=null;
 
 
         try{
             con = DriverManager.getConnection(url, user, password);
-            sql = "INSERT INTO members(name,brith_day,gender,color_id) VALUES" +
-            "('大野 智','1980-11-26','男',1)," +
-            "('櫻井 翔','1982-1-25','男',2)," +
-            "('相葉 雅紀','1982-12-24','男',3)," +
-            "('二宮 和也','1983-6-17','男',4)," +
-            "('松本 潤','1983-8-30','男',5);";
+            sql = "SELECT m.name as m_name, m.brith_day, m.gender, c.name as c_name FROM members m JOIN colors c ON c.id = m.color_id;";
             pstmt =con.prepareStatement(sql);
-            int numOfUpdate = pstmt.executeUpdate();
-            System.out.println(numOfUpdate+"件データを操作しました。");
-        
+            rs = pstmt.executeQuery();
 
+            while(rs.next()){
+                String name =rs.getString("m_name");
+                String birth_day =rs.getString("brith_day");
+                String gender =rs.getString("gender");
+                String cname =rs.getString("c_name");
+                System.out.print("name "+name);
+                System.out.println();
+                System.out.print("brith_day "+birth_day);
+                System.out.println();
+                System.out.println("gender "+gender);
+                System.out.println("color_name "+cname);
+                System.out.println();
+            }
 
         }catch(SQLException ex){
             System.out.println("SQLの障害が発生しました");
@@ -42,11 +50,12 @@ public class Ex02 {
                 if(pstmt!=null){
                     pstmt.close();
                 }
-
+                if(rs!=null){
+                    rs.close();
+                }
             }catch(SQLException e){
                 e.printStackTrace();
             }
         }
     }
 }
-

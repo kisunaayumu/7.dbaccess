@@ -18,8 +18,7 @@ public class Ex05 {
 
         try{
             con = DriverManager.getConnection(url, user, password);
-            sql = "DELETE FROM members where id=1;";
-            sql = "DELETE FROM members where id=2;";
+            sql = "DELETE FROM members where id=1 OR id=2;";
             pstmt =con.prepareStatement(sql);
             int numOfUpdate = pstmt.executeUpdate();
             System.out.println(numOfUpdate+"件データを操作しました。");
